@@ -4,11 +4,30 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+
+interface ISupraSValueFeed {
+
+    // Data structure to hold the pair data
+    struct priceFeed {
+        uint256 round;
+        uint256 decimals;
+        uint256 time;
+        uint256 price;
+    }
+
+    function getSvalue(uint256 _pairIndex) external view returns(priceFeed memory);
+}
+
 /**
  * @title YieldFarm
  * @dev A contract for staking ERC20 tokens and earning rewards.
  */
 contract YieldFarm is Ownable{
+
+    ISupraSValueFeed internal sValueFeed;
+
+    /// Event emitted when a pair price is received
+    event PairPrice(uint256 pair, uint256 price, uint256 decimals);
 
     /// @notice The name of the yield farm.
     string public name = "Reward Token Farm";
@@ -35,8 +54,9 @@ contract YieldFarm is Ownable{
      * @notice Constructor to initialize the reward token.
      * @param _rewardTokenAddress The address of the reward token contract.
      */
-    constructor(address _rewardTokenAddress) public {
+    constructor(address _rewardTokenAddress, address oracle_) public {
         rewardToken = IERC20(_rewardTokenAddress);
+        sValueFeed = ISupraSValueFeed(0x08c56fa8eDb36642894fFE372aAC0cF33A06AaC2);
     }
 
     /**
@@ -157,6 +177,24 @@ contract YieldFarm is Ownable{
             return 0;
         }
         return
-            (stakingBalance[token][user] * getTokenEthPrice(token)) / (10**18);
+            (stakingBalance[token][user] * getPrice(token)) / (10**18);
     }
+
+    // Issuing Tokens
+    function issueTokens() public onlyOwner {
+        // Issue tokens to all stakers
+        for (
+            uint256 stakersIndex = 0;
+            stakersIndex < stakers.length;
+            stakersIndex++
+        ) {
+            address recipient = stakers[stakersIndex];
+            dappToken.transfer(recipient, getUserTotalValue(recipient));
+        }
+    }
+
+    function getPrice(uint256 _priceIndex) external view returns(ISupraSValueFeed.priceFeed memomry){
+        sValueFeed.getSvalue(_pairIndex);
+    }
+
 }
