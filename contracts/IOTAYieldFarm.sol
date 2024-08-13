@@ -37,10 +37,10 @@ contract IOTAYieldFarm is Ownable {
     mapping(address => bool) public hasStaked;
 
     // Supra price feed pair index for IOTA/USDT
-    uint256 public iotaUsdtPairIndex = 0;
+    uint256 public iotaUsdtPairIndex = 171;
 
-    constructor(address _supraOracleAddress) public {
-        sValueFeed = ISupraSValueFeed(_supraOracleAddress);
+    constructor() public {
+        sValueFeed = ISupraSValueFeed(0x2FA6DbFe4291136Cf272E1A3294362b6651e8517);
     }
 
     /**
