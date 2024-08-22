@@ -1,4 +1,5 @@
-const ContractABI = [{
+const ContractABI = [
+  {
     "inputs": [
       {
         "internalType": "contract DappToken",
@@ -22,51 +23,6 @@ const ContractABI = [{
         "internalType": "contract DappToken",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getIOTAPriceInUSDT",
-    "outputs": [
-      {
-        "internalType": "uint256[4]",
-        "name": "",
-        "type": "uint256[4]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint64",
-        "name": "_priceIndex",
-        "type": "uint64"
-      }
-    ],
-    "name": "getPrice",
-    "outputs": [
-      {
-        "internalType": "uint256[4]",
-        "name": "",
-        "type": "uint256[4]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getUsdtPrice",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "",
-        "type": "int256"
       }
     ],
     "stateMutability": "view",
@@ -105,19 +61,6 @@ const ContractABI = [{
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "iotaUsdtPairIndex",
-    "outputs": [
-      {
-        "internalType": "uint64",
-        "name": "",
-        "type": "uint64"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -141,6 +84,19 @@ const ContractABI = [{
     "name": "issueTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -226,6 +182,6 @@ const ContractABI = [{
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  }];
-
+  }
+]
   export default ContractABI;

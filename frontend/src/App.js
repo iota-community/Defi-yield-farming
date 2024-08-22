@@ -9,9 +9,7 @@ import contractABI from './YieldContractABI';
 import {DappTokeABI, DappTokenAddress} from './DappTokenABI';
 import {StakeTokenABI, StakeTokenAddress} from './StakeTokenABI';
 
-
-const contractAddress = "0xDCb82e164f9c8256c96C772BF94c837BF69b12A2";
-
+const contractAddress = "0x7f369d221e85e60c2ceb645b9adc224966a5e1a6";
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -95,6 +93,9 @@ function App() {
       const address = await signer.getAddress();
       const balance = await tokenContract.balanceOf(address);
       setBalance(balance);
+
+      const totalLocked = await tokenContract.balanceOf(contractAddress);
+      setTotalLocked(ethers.formatEther(totalLocked));
     } catch (error) {
       console.error("Failed to update balance:", error);
     }
