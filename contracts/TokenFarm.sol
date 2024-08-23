@@ -107,7 +107,7 @@ contract TokenFarm {
      * @param priceUpdate An array of price update data required by the Pyth Oracle.
      * @return iotaToUsdPrice The current price of IOTA in USD with 18 decimal places.
      */
-    function getIOTA2USDPriceFeed(
+    function getIotaToUsdPriceFeed(
         bytes[] calldata priceUpdate
     ) public payable returns (uint256) {
         // Calculate the fee required to fetch the price update from the Pyth Oracle.
@@ -151,7 +151,7 @@ contract TokenFarm {
         );
 
         // Fetch the current IOTA/USD price from the Pyth Oracle.
-        uint256 iotaToUSDPrice = getIOTA2USDPriceFeed(priceUpdate);
+        uint256 iotaToUSDPrice = getIotaToUsdPriceFeed(priceUpdate);
 
 
         // Loop through all stakers and distribute rewards based on their staked amount
