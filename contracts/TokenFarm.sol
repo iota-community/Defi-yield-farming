@@ -10,7 +10,6 @@ import "@pythnetwork/pyth-sdk-solidity/PythUtils.sol";
 
 /**
  * @title IOTA Yield Farming Contract
- * @author [Your Name]
  * @notice This contract allows users to stake IOTATokens and earn rewards in DappTokens
  * @dev Implements staking, unstaking, and reward distribution mechanisms
  */
@@ -179,5 +178,15 @@ contract TokenFarm {
 
         // Update the timestamp of the last reward issuance
         lastReward = block.timestamp;
+    }
+
+    // Get the number of dapp tokens in the pool
+    function dappTokenBalance() public view returns(uint256){
+        return dappToken.balanceOf(address(this));
+    }
+
+    // Get the number of iota tokens in the pool
+    function iotaTokenBalance() public view returns(uint256){
+        return iotaToken.balanceOf(address(this));
     }
 }
