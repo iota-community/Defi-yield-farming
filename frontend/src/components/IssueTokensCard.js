@@ -1,10 +1,21 @@
 import React from 'react';
+import { EvmPriceServiceConnection } from "@pythnetwork/pyth-evm-js";
+
+const hermesUrl = "https://hermes.pyth.network";
+const baseTokenPriceFeedId = "0xc7b72e5d860034288c9335d4d325da4272fe50c92ab72249d58f6cbba30e4c44";
+const quoteTokenPriceFeedId = "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b";
 
 function IssueTokensCard({ contract, updateStats }) {
   async function handleIssueTokens() {
     if (!contract) return;
     try {
-      const tx = await contract.issueTokens();
+      const pythPriceService = new EvmPriceServiceConnection(hermesUrl);
+      const priceFeedUpdateData = await pythPriceService.getPriceFeedsUpdateData([
+        baseTokenPriceFeedId,
+        quoteTokenPriceFeedId,
+      ]);
+      //console.log(priceFeedUpdateData);
+      const tx = await contract.issueTokens(priceFeedUpdateData);
       await tx.wait();
       updateStats();
     } catch (error) {
