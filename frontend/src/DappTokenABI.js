@@ -314,4 +314,4 @@ export const DappTokeABI =  [
 	}
 ]
 
-export const DappTokenAddress = "0xe3a6b3aa25cfc19fd4265db5510294c8f46dd9e1";
+export const DappTokenAddress = "0xf58f272cB6C3A495A942198fB48e64442ceeC748";

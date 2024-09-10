@@ -1,19 +1,10 @@
 import React from 'react';
-import { EvmPriceServiceConnection } from "@pythnetwork/pyth-evm-js";
-
-const hermesUrl = "https://hermes.pyth.network";
-const iotaToUsdPriceFeedId = "0xc7b72e5d860034288c9335d4d325da4272fe50c92ab72249d58f6cbba30e4c44";
 
 function IssueTokensCard({ contract, updateStats }) {
   async function handleIssueTokens() {
     if (!contract) return;
     try {
-      const pythPriceService = new EvmPriceServiceConnection(hermesUrl);
-      const priceFeedUpdateData = await pythPriceService.getPriceFeedsUpdateData([
-        iotaToUsdPriceFeedId,
-      ]);
-      //console.log(priceFeedUpdateData);
-      const tx = await contract.issueTokens(priceFeedUpdateData);
+      const tx = await contract.issueTokens();
       await tx.wait();
       updateStats();
     } catch (error) {

@@ -10,10 +10,46 @@ const ContractABI = [
         "internalType": "contract IOTAToken",
         "name": "_iotaToken",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pythContract",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "iotaToUSDPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "stakedBalanceinUSD",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "ValueChanged",
+    "type": "event"
   },
   {
     "inputs": [],
@@ -23,6 +59,32 @@ const ContractABI = [
         "internalType": "contract DappToken",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dappTokenBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getIotaToUsdPriceFeed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -61,6 +123,19 @@ const ContractABI = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "iotaTokenBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -83,7 +158,7 @@ const ContractABI = [
     "inputs": [],
     "name": "issueTokens",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {

@@ -9,7 +9,7 @@ import contractABI from './YieldContractABI';
 import {DappTokeABI, DappTokenAddress} from './DappTokenABI';
 import {StakeTokenABI, StakeTokenAddress} from './StakeTokenABI';
 
-const contractAddress = "0x7f369d221e85e60c2ceb645b9adc224966a5e1a6";
+const contractAddress = "0x3bddd03374A314BBFd994FA17b9066F9ed99F3a2";
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -67,8 +67,8 @@ function App() {
         DappTokeABI,
         signer
       )
-      const totalLocked = await tokenContract.balanceOf(contractAddress);
-      setTotalLocked(ethers.formatEther(totalLocked));
+      //const totalLocked = await tokenContract.balanceOf(contractAddress);
+      //setTotalLocked(ethers.formatEther(totalLocked));
 
       const address = await signer.getAddress();
       const userInvestment = await contract.stakingBalance(address);

@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol"; // Import the ERC20 int
 import "@pythnetwork/pyth-sdk-solidity/IPyth.sol";
 import "@pythnetwork/pyth-sdk-solidity/PythStructs.sol";
 import "@pythnetwork/pyth-sdk-solidity/PythUtils.sol";
+import "hardhat/console.sol";
 
 /**
  * @title IOTA Yield Farming Contract
@@ -14,6 +15,7 @@ import "@pythnetwork/pyth-sdk-solidity/PythUtils.sol";
  * @dev Implements staking, unstaking, and reward distribution mechanisms
  */
 contract TokenFarm {
+    event ValueChanged(uint256 balance, uint256 iotaToUSDPrice, uint256 stakedBalanceinUSD, uint256 reward);
     IPyth pyth;
 
     /// @notice Name of the yield farm
@@ -104,25 +106,16 @@ contract TokenFarm {
 
     /**
      * @dev Fetches the current price of IOTA in USD from the Pyth Oracle network.
-     * @param priceUpdate An array of price update data required by the Pyth Oracle.
      * @return iotaToUsdPrice The current price of IOTA in USD with 18 decimal places.
      */
-    function getIotaToUsdPriceFeed(
-        bytes[] calldata priceUpdate
-    ) public payable returns (uint256) {
-        // Calculate the fee required to fetch the price update from the Pyth Oracle.
-        uint fee = pyth.getUpdateFee(priceUpdate);
-
-        // Update the price feeds in the Pyth Oracle with the provided update data.
-        pyth.updatePriceFeeds{value: fee}(priceUpdate);
-
+    function getIotaToUsdPriceFeed() public  view returns (uint256) {
         // Define the unique identifier for the IOTA/USD price feed in the Pyth Oracle.
         bytes32 priceFeedId = 0xc7b72e5d860034288c9335d4d325da4272fe50c92ab72249d58f6cbba30e4c44;
 
         // Fetch the price of IOTA/USD from the Pyth Oracle, ensuring the price is not older than 60 seconds.
         PythStructs.Price memory price = pyth.getPriceNoOlderThan(
             priceFeedId,
-            60
+           30000000000
         );
 
         // @dev Convert the fetched price to an unsigned integer with 18 decimal places.
@@ -140,7 +133,7 @@ contract TokenFarm {
      * @notice Issue rewards to all stakers
      * @dev Only the contract owner can call this function, and rewards are issued once every 60 minutes
      */
-    function issueTokens(bytes[] calldata priceUpdate) public {
+    function issueTokens() public payable {
         // Ensure that only the contract owner can call this function
         require(msg.sender == owner, "caller must be the owner");
 
@@ -151,7 +144,7 @@ contract TokenFarm {
         );
 
         // Fetch the current IOTA/USD price from the Pyth Oracle.
-        uint256 iotaToUSDPrice = getIotaToUsdPriceFeed(priceUpdate);
+        uint256 iotaToUSDPrice = getIotaToUsdPriceFeed();
 
 
         // Loop through all stakers and distribute rewards based on their staked amount
@@ -162,16 +155,16 @@ contract TokenFarm {
             // If the staker has a non-zero balance, issue rewards
             if (balance > 0) {
                 // Calculate the reward based on the staked value in USD
-                uint256 stakedBalanceinUSD = (balance * iotaToUSDPrice) /
-                    10 ** 18;
+                uint256 stakedBalanceinUSD = balance * iotaToUSDPrice;
 
                 // Determine reward amount, e.g., 5% of the staked value in USD
-                uint256 reward = (stakedBalanceinUSD * 5) / 100;
+                uint256 reward = (stakedBalanceinUSD/10**18)  * (5/100 * 10**18)/10**18;
+                emit ValueChanged(balance, iotaToUSDPrice, stakedBalanceinUSD, reward);
 
                 // Transfer the reward to the staker
                 dappToken.transfer(
                     recipient,
-                    reward * 10 ** dappToken.decimals()
+                    reward
                 );
             }
         }
