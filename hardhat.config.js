@@ -17,9 +17,9 @@ module.exports = {
   },
   networks: {
     shimmer_evm_testnet: {
-      url: [`0x${shimmer_evm_testnet}`], // Using shimmer evm testnet from the .env file
+      url: `${shimmer_evm_testnet}`, // Using shimmer evm testnet from the .env file
       chainId: 1073,  // Chain ID for Shimmer EVM testnet
-      accounts: [`0x${priv_key}`],  // Using the private key from the .env file
+      accounts: [priv_key],  // Using the private key from the .env file
     },
   },
   etherscan: {

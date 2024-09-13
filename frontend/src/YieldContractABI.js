@@ -1,4 +1,4 @@
-const ContractABI = [
+export const ContractABI = [
   {
     "inputs": [
       {
@@ -259,4 +259,5 @@ const ContractABI = [
     "type": "function"
   }
 ]
-  export default ContractABI;
+  
+export const ContractAddress = "0x17427283d7e83Ee11CBe626E07292441EbfbC64B";

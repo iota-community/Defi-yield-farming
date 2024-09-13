@@ -5,11 +5,10 @@ import StakeCard from './components/StakeCard';
 import UnstakeCard from './components/UnstakeCard';
 import IssueTokensCard from './components/IssueTokensCard';
 import StatsCard from './components/StatsCard';
-import contractABI from './YieldContractABI';
+import {ContractABI, ContractAddress} from './YieldContractABI';
 import {DappTokeABI, DappTokenAddress} from './DappTokenABI';
 import {StakeTokenABI, StakeTokenAddress} from './StakeTokenABI';
 
-const contractAddress = "0x3bddd03374A314BBFd994FA17b9066F9ed99F3a2";
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -46,7 +45,7 @@ function App() {
         //const provider = new ethers.providers.Web3Provider(window.ethereum);
         const provider = new BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, contractABI, signer);
+        const contract = new ethers.Contract(ContractAddress, ContractABI, signer);
         setContract(contract);
         setSigner(signer);
         setIsConnected(true);
@@ -94,7 +93,7 @@ function App() {
       const balance = await tokenContract.balanceOf(address);
       setBalance(balance);
 
-      const totalLocked = await tokenContract.balanceOf(contractAddress);
+      const totalLocked = await tokenContract.balanceOf(ContractAddress);
       setTotalLocked(ethers.formatEther(totalLocked));
     } catch (error) {
       console.error("Failed to update balance:", error);
@@ -111,7 +110,7 @@ function App() {
       <div className="container mx-auto px-4 py-8">
         <StatsCard totalLocked={totalLocked} userInvestment={userInvestment} reward={reward}/>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          <StakeCard contract={contract} updateStats={() => updateStats(contract, signer)} signer={signer} contractAddress={contractAddress}/>
+          <StakeCard contract={contract} updateStats={() => updateStats(contract, signer)} signer={signer} contractAddress={ContractAddress}/>
           <UnstakeCard contract={contract} updateStats={() => updateStats(contract, signer)} />
           <IssueTokensCard contract={contract} updateStats={() => updateStats(contract, signer)} />
         </div>
