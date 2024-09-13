@@ -313,4 +313,4 @@ export const StakeTokenABI = [
         "type": "function"
     }
 ]
-export const StakeTokenAddress = "0x60EE3969F167E43e2A5b5b6FC758aA4EDB73d3e1";
+export const StakeTokenAddress = "0x94c3c26dD0DF5F746Dc9bBC6d56aA13d920Dbd06";
