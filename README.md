@@ -1,6 +1,6 @@
-# Yield Farming with Dynamic Rewards on IOTA Shimmer EVM using Pyth Price Feeds
+# Yield Farming with Dynamic Rewards on IOTA EVM using Pyth Price Feeds
 
-This project demonstrates a decentralized yield farming application built on the ShimmerEVM Testnet, using Solidity smart contracts. It allows users to stake ERC20 Tokens, earn dynamic rewards in DappTokens, and withdraw their staked assets. The reward distribution leverages real-time IOTA/USD token prices fetched using Pyth Network to calculate dynamic reward amounts.
+This project demonstrates a decentralized yield farming application built on the IOTA EVM Testnet, using Solidity smart contracts. It allows users to stake ERC20 Tokens, earn dynamic rewards in DappTokens, and withdraw their staked assets. The reward distribution leverages real-time IOTA/USD token prices fetched using Pyth Network to calculate dynamic reward amounts.
 
 ## Project Structure
 
@@ -40,7 +40,7 @@ Before running this project, make sure you have the following installed:
 
 - Node.js (v14 or later)
 - Hardhat
-- MetaMask (for interacting with the IOTA ShimmerEVM Testnet)
+- MetaMask (for interacting with the IOTA EVM Testnet)
 - API Key for Pyth Oracles (if needed for price data fetching)
 
 ## Getting Started
@@ -69,16 +69,16 @@ Create a `.env` file at the root of your project and include the following:
 ```bash
 # .env
 PRIVATE_KEY=your-private-key
-SHIMMER_EVM_TESTNET_URL=https://json-rpc.evm.testnet.shimmer.network
+IOTA_EVM_TESTNET_URL=https://json-rpc.evm.testnet.iota.network
 ```
 
 ### 4. Deploy the Contracts
 
-Use Hardhat to compile and deploy the contracts on ShimmerEVM testnet.
+Use Hardhat to compile and deploy the contracts on IOTA EVM testnet.
 
 ```bash
 npx hardhat compile
-npx hardhat run scripts/deploy.js --network shimmer_evm_testnet
+npx hardhat run scripts/deploy.js --network iota_evm_testnet
 ```
 
 ### 5. Run the Frontend
